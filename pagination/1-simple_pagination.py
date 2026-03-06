@@ -55,5 +55,5 @@ class Server:
         start, end = self.index_range(page, page_size)
         if start >= len(dataset):
             return []
-        return [list(dataset[row]) for row in range(start, end)]
+        return [list(row) for row in dataset[start:end]]
         
