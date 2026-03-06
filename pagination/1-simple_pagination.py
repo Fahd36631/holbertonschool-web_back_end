@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Simple pagination
+"""Simple pagination implementation for a dataset.
 """
 import csv
 from typing import List, Tuple
@@ -14,7 +14,10 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
+        """Retrieve and cache the dataset from the CSV file.
+
+        Returns:
+            List[List]: The dataset as a list of lists.
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -25,28 +28,28 @@ class Server:
         return self.__dataset
 
     def index_range(self, page: int, page_size: int) -> Tuple[int, int]:
-        """return a tuple of size two containing a start index and an end index
+        """Calculate the start and end index for pagination.
 
         Args:
-            page (int): number of page
-            page_size (int): size of page
+            page (int): The page number (1-indexed).
+            page_size (int): The number of items per page.
 
         Returns:
-            Tuple[int, int]: (start index, end index)
+            Tuple[int, int]: A tuple containing the start index and end index.
         """
         start: int = (page - 1) * page_size
         end: int = page * page_size
         return (start, end)
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """get page
+        """Retrieve a specific page of the dataset.
 
         Args:
-            page (int, optional): number of page. Defaults to 1.
-            page_size (int, optional): number of row in page. Defaults to 10.
+            page (int, optional): The page number (1-indexed). Defaults to 1.
+            page_size (int, optional): The number of items per page. Defaults to 10.
 
         Returns:
-            List[List]: List of dataset rows by range
+            List[List]: A list of rows for the requested page, or empty list if out of range.
         """
         assert type(page) is int and type(page_size) is int
         assert page > 0 and page_size > 0

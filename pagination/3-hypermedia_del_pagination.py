@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Deletion-resilient hypermedia pagination
+"""Deletion-resilient hypermedia pagination implementation.
 """
 
 import csv
@@ -18,7 +17,10 @@ class Server:
         self.__indexed_dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
+        """Retrieve and cache the dataset from the CSV file.
+
+        Returns:
+            List[List]: The dataset as a list of lists.
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -29,7 +31,10 @@ class Server:
         return self.__dataset
 
     def indexed_dataset(self) -> Dict[int, List]:
-        """Dataset indexed by sorting position, starting at 0
+        """Create and cache an indexed version of the dataset.
+
+        Returns:
+            Dict[int, List]: A dictionary mapping index to dataset row.
         """
         if self.__indexed_dataset is None:
             dataset = self.dataset()
@@ -39,14 +44,14 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        """Return dict of pagination data.
+        """Retrieve a page using index-based pagination that is resilient to deletions.
 
         Args:
-            index (int, optional): index. Defaults to None.
-            page_size (int, optional): size of page. Defaults to 10.
+            index (int, optional): The starting index for pagination. Defaults to None.
+            page_size (int, optional): The number of items per page. Defaults to 10.
 
         Returns:
-            Dict: indexed data
+            Dict: A dictionary containing the page data and pagination metadata.
         """
         assert index is not None
         len_data = len(self.dataset())
