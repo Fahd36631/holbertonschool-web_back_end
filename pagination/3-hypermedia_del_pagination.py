@@ -66,4 +66,3 @@ class Server:
             'next_index': max(idx) + 1
         }
         return indexed_data
-        
