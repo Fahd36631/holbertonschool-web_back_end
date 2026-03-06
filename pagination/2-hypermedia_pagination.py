@@ -53,9 +53,9 @@ class Server:
         assert page > 0 and page_size > 0
         dataset = self.dataset()
         start, end = self.index_range(page, page_size)
-        if end > len(dataset):
+        if start >= len(dataset):
             return []
-        return [list(dataset[row]) for row in range(start, end)]
+        return dataset[start:end]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) ->\
             Dict[str, Union[List[List], None, int]]:
@@ -66,8 +66,7 @@ class Server:
             page_size (int, optional): number of row in page. Defaults to 10.
 
         Returns:
-            Dict[ int, int, List[List], Union[None, int], Union[None, int],
-            int]: HATEOAS
+            Dict[str, Union[List[List], None, int]]: HATEOAS
         """
         data: List = self.get_page(page, page_size)
         size_dataset: int = len(self.dataset())

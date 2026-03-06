@@ -2,7 +2,6 @@
 """Simple pagination
 """
 import csv
-import math
 from typing import List, Tuple
 
 
@@ -55,5 +54,5 @@ class Server:
         start, end = self.index_range(page, page_size)
         if start >= len(dataset):
             return []
-        return [list(row) for row in dataset[start:end]]
+        return dataset[start:end]
         
