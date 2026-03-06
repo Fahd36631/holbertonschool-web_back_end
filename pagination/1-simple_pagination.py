@@ -58,3 +58,4 @@ class Server:
         if end > len(dataset):
             return []
         return [list(dataset[row]) for row in range(start, end)]
+        

@@ -19,3 +19,4 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     for _ in range(page - 1):
         start += page_size
     return (start, end)
+    
