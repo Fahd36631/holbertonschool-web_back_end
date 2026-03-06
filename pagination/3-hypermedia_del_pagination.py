@@ -49,21 +49,28 @@ class Server:
         Returns:
             Dict: indexed data
         """
+        assert index is not None
         len_data = len(self.dataset())
-        assert 1 < index < len_data
+        assert 0 <= index < len_data
 
         indexed_dataset = self.indexed_dataset()
-        indexed_pages = {}
-        for i in range(index, len_data):
-            if i in indexed_dataset and len(indexed_pages) < page_size:
-                indexed_pages[i] = indexed_dataset[i]
-        pages = list(indexed_pages.values())
-        idx = indexed_pages.keys()
+        data = []
+        current_index = index
+        next_index = None
+        
+        while len(data) < page_size and current_index < len_data:
+            if current_index in indexed_dataset:
+                data.append(indexed_dataset[current_index])
+            current_index += 1
+        
+        if current_index < len_data:
+            next_index = current_index
+        
         indexed_data = {
             'index': index,
-            'data': pages,
-            'page_size': len(pages),
-            'next_index': max(idx) + 1
+            'data': data,
+            'page_size': len(data),
+            'next_index': next_index
         }
         return indexed_data
         
