@@ -1,10 +1,8 @@
-export default function uploadPhoto() {
+export function uploadPhoto() {
   return new Promise((resolve) => resolve({ status: 200, body: 'photo-profile-1' }));
 }
 
 export function createUser() {
   return new Promise((resolve) => resolve({ firstName: 'Guillaume', lastName: 'Salva' }));
 }
-
-export { uploadPhoto };
 
