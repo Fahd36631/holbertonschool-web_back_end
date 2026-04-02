@@ -7,4 +7,5 @@ yarn-error.log*
 coverage/
 .idea/
 .vscode/
+ES6_data_manipulation/*-main.js
 
