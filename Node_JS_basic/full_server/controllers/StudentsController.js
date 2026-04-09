@@ -14,9 +14,11 @@ class StudentsController {
           responseLines.push(`Number of students in ${field}: ${firstnames.length}. List: ${firstnames.join(', ')}`);
         });
 
+        res.type('text/plain');
         res.status(200).send(responseLines.join('\n'));
       })
       .catch(() => {
+        res.type('text/plain');
         res.status(500).send('Cannot load the database');
       });
   }
@@ -26,15 +28,18 @@ class StudentsController {
     const database = process.argv[2];
 
     if (major !== 'CS' && major !== 'SWE') {
+      res.type('text/plain');
       res.status(500).send('Major parameter must be CS or SWE');
       return;
     }
 
     readDatabase(database)
       .then((studentsByField) => {
+        res.type('text/plain');
         res.status(200).send(`List: ${studentsByField[major].join(', ')}`);
       })
       .catch(() => {
+        res.type('text/plain');
         res.status(500).send('Cannot load the database');
       });
   }
